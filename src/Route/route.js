@@ -1,30 +1,30 @@
 const express=require('express')
-const router = express.Router()
+const router = express.Router()                                                    
 
 
-const UserController= require("../controllers/userController")
-const BookController= require("../controllers/bookController")
-const Middleware= require("../middleware/authorization")
-const ReviewController= require("../controllers/reviewController")
+const UserController= require("../controllers/userController")                          // Requiring all the controllers.
+const contactGroupController= require("../controllers/contactGroupController")
+const contactController = require("../controllers/contactController")
+const Logincheck = require("../middleware/authorization")
+//****************************************************User API **********************************************//
 
 router.post("/register",UserController.createUser)
 router.post("/login", UserController.loginUser)
-router.post("/books",Middleware.loginCheck, BookController.createBook)//1
-router.post("/books/:bookId/review", ReviewController.createReviewByBookId)//1
-router.put("/books/:bookId/review/:reviewId", ReviewController.updateReviews)
 
-//**************************************GET API*****************************************************/
+//***************************************Contact Group APIS**********************************************//
 
-router.get("/books", Middleware.loginCheck, BookController.getBooks)//2
-router.get("/books/:bookId",  Middleware.loginCheck,BookController.getBookDetailsById)//3
-router.put("/books/:bookId",  Middleware.loginCheck,BookController.updateDetails)//3
-router.delete("/books/:bookId",  Middleware.loginCheck,BookController.deleteBookById)//3
-router.delete("/books/:bookId/review/:reviewId", ReviewController.deleteReview)
+router.post("/create", Logincheck.loginCheck, contactGroupController.createGroup)
+router.get("/getdata",Logincheck.loginCheck,contactGroupController.getContactGroup)
+router.get("/getAllGroup",Logincheck.loginCheck,contactGroupController.getallGroupOfUser)
+router.put("/updateGroup/:groupById",Logincheck.loginCheck, contactGroupController.updateGroup)
+router.delete("/deleteGroup",Logincheck.loginCheck, contactGroupController.deletegroup)
 
 
+//**********************************************Contact APIs **********************************************//
 
-
-
-
-
+router.post("/createContact",Logincheck.loginCheck,contactController.createContact)
+router.get("/getContact",Logincheck.loginCheck,contactController.getContact)
+router.get("/getParticularContact",Logincheck.loginCheck,contactController.getParticularContact)
+router.put("/updateContact/:contactById",Logincheck.loginCheck, contactController.updateContact)
+router.delete("/deleteContact",Logincheck.loginCheck ,contactController.deleteContact)
 module.exports= router;

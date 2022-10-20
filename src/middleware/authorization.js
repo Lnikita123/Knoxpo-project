@@ -1,6 +1,6 @@
 const jwt= require("jsonwebtoken")
 const bookModel= require("../controllers/userController")
-const secretKey= "bookprojectGroup19"
+const secretKey= "Groupproject"
 
 
 const loginCheck = async function(req, res, next) {
